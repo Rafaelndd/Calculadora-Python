@@ -33,10 +33,20 @@ valor_texto = StringVar()
 # CRIANDO FUNÇÃO PARA CALCULAR #
 
 def entrada_valores(event):
-
     global todos_valores
-    todos_valores = todos_valores + str(event)
+    if event == '%':
+        try:
+            if todos_valores:
+                todos_valores = str(eval(todos_valores + "/100"))
+            else:
+                todos_valores = "0"
+        except:
+            valor_texto.set("Erro")
+            todos_valores = ""
+    else:
+        todos_valores += str(event)
     valor_texto.set(todos_valores)
+
 
 def limpar_tela():
     global todos_valores
@@ -44,10 +54,15 @@ def limpar_tela():
     valor_texto.set("")
 
 def calcular():
-    global  todos_valores
-    resultado = str(eval(todos_valores))
-    valor_texto.set(resultado)
-    todos_valores = ""
+    global todos_valores
+    try:
+        resultado = str(eval(todos_valores))
+        valor_texto.set(resultado)
+        todos_valores = ""
+    except Exception as e:
+        valor_texto.set("Erro")
+        todos_valores = ""
+
 
 # CRIANDO LABEL #
 
